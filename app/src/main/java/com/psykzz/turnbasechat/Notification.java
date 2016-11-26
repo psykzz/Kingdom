@@ -13,11 +13,11 @@ public class Notification {
 
     private Activity mActivity;
 
-    Notification(Activity activity) {
+    public Notification(Activity activity) {
         mActivity = activity;
     }
 
-     void toast(String message) {
+    public void toast(String message) {
         toast(message, true);
      }
 
@@ -28,7 +28,6 @@ public class Notification {
         }
         Snackbar snackbar = Snackbar
                 .make(mActivity.findViewById(android.R.id.content), message, duration)
-//                .setAction("Undo", this.toast)
                 ;
         View snackbarView = snackbar.getView();
         snackbarView.setBackgroundColor(Color.DKGRAY);

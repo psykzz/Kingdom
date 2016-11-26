@@ -2,15 +2,17 @@ package com.psykzz.turnbasechat;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
-import android.view.View;
+
+/*
+Show the active chat
+ */
 
 public class ChatActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chat);
+        setContentView(R.layout.chat);
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
