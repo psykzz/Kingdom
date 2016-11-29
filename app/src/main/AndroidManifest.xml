@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.psykzz.turnbasechat">
+    package="com.psykzz.kingdom">
 
     <!-- Required to check for WiFi connection -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!-- Required by firebase -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:allowBackup="true"
@@ -12,13 +16,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+        <!-- Services -->
+        <service
+            android:name="com.psykzz.kingdom.Helpers.LocalDiscovery"
+            android:exported="false"/>
+
+
         <!-- Required for Nearby Connections API -->
         <meta-data
             android:name="com.google.android.gms.nearby.connection.SERVICE_ID"
             android:value="@string/service_id" />
 
         <activity
-            android:name=".SplashActivity"
+            android:name="com.psykzz.kingdom.SplashActivity"
             android:label="@string/app_name"
             android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter>
@@ -27,19 +37,19 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".DiscoverActivity"
+            android:name="com.psykzz.kingdom.DiscoverActivity"
             android:label="@string/app_name"
             android:windowSoftInputMode="stateHidden"></activity>
         <activity
-            android:name=".ChatActivity"
+            android:name="com.psykzz.kingdom.ChatActivity"
             android:label="@string/title_activity_chat"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden"
-            android:parentActivityName="com.psykzz.turnbasechat.DiscoverActivity" >
+            android:parentActivityName="com.psykzz.kingdom.DiscoverActivity" >
             <!-- The meta-data element is needed for versions lower than 4.1 -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.psykzz.turnbasechat.DiscoverActivity" />
+                android:value="com.psykzz.kingdom.DiscoverActivity" />
         </activity>
     </application>
 

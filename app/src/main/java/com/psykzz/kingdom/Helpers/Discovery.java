@@ -1,10 +1,10 @@
-package com.psykzz.turnbasechat.Helpers;
+package com.psykzz.kingdom.Helpers;
 
 /**
  * Created by PsyKzz on 25/11/2016.
  */
 
-public class Discovery {
+public class Discovery extends Object {
     private String mEndpointId;
     private String mdeviceId;
     private String mServiceId;
@@ -17,19 +17,23 @@ public class Discovery {
         mEndpointName = endpointName;
     }
 
-    public String getmEndpointId() {
+    public boolean equals(Discovery other) {
+        return mdeviceId == other.getDeviceId();
+    }
+
+    public String getEndpointId() {
         return mEndpointId;
     }
 
-    public String getMdeviceId() {
+    public String getDeviceId() {
         return mdeviceId;
     }
 
-    public String getmServiceId() {
+    public String getServiceId() {
         return mServiceId;
     }
 
-    public String getmEndpointName() {
+    public String getEndpointName() {
         return mEndpointName;
     }
 }

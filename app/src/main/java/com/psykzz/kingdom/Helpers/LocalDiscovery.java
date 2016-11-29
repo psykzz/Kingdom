@@ -1,6 +1,5 @@
-package com.psykzz.turnbasechat.Helpers;
+package com.psykzz.kingdom.Helpers;
 
-import android.app.Activity;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -14,8 +13,9 @@ import com.google.android.gms.nearby.Nearby;
 import com.google.android.gms.nearby.connection.AppIdentifier;
 import com.google.android.gms.nearby.connection.AppMetadata;
 import com.google.android.gms.nearby.connection.Connections;
-import com.psykzz.turnbasechat.Notification;
-import com.psykzz.turnbasechat.R;
+import com.psykzz.kingdom.DiscoverActivity;
+import com.psykzz.kingdom.Notification;
+import com.psykzz.kingdom.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,19 +30,18 @@ public class LocalDiscovery implements
 
     private final Logger Log = Logger.getLogger(this.toString());
 
-    private Activity mActivity;
+    private DiscoverActivity mActivity;
     private Notification mNotifications;
 
-    private ArrayList<Discovery> mRecentDiscoveries = new ArrayList<>();
+    public ArrayList<Discovery> mRecentDiscoveries = new ArrayList<>();
 
     public GoogleApiClient mGoogleApiClient;
-    private boolean mIsHost = true;
 
     private static int[] NETWORK_TYPES = {ConnectivityManager.TYPE_WIFI,
             ConnectivityManager.TYPE_ETHERNET};
     private boolean mDiscoverable;
 
-    public LocalDiscovery(Activity activity) {
+    public LocalDiscovery(DiscoverActivity activity) {
         mActivity = activity;
         mNotifications = new Notification(activity);
 
@@ -76,9 +75,6 @@ public class LocalDiscovery implements
             mNotifications.toast("Networking is not available.");
             return;
         }
-
-        // Identify that this device is the host
-        mIsHost = true;
 
         // Advertising with an AppIdentifer lets other devices on the
         // network discover this application and prompt the user to
@@ -160,7 +156,13 @@ public class LocalDiscovery implements
     public void onEndpointFound(final String endpointId, String deviceId,
                                 String serviceId, final String endpointName) {
         Discovery disc = new Discovery(endpointId, deviceId, serviceId, endpointName);
+        for(Discovery oDisc : mRecentDiscoveries) {
+            if(oDisc.equals(disc)) {
+                return;
+            }
+        }
         mRecentDiscoveries.add(disc);
+        mActivity.mAdapter.notifyDataSetChanged();
 
         Log.info("onEndpointFound - found new endpoint");
         Log.info("onEndpointFound - " + endpointId);
@@ -168,9 +170,6 @@ public class LocalDiscovery implements
         Log.info("onEndpointFound - " + serviceId);
         Log.info("onEndpointFound - " + endpointName);
         Log.info("onEndpointFound - ---");
-        // This device is discovering endpoints and has located an advertiser.
-        // Write your logic to initiate a connection with the device at
-        // the endpoint ID
     }
 
     @Override
@@ -196,12 +195,16 @@ public class LocalDiscovery implements
             stopAdvertising();
     }
 
+    public void stopAll() {
+        Nearby.Connections.stopAllEndpoints(mGoogleApiClient);
+    }
+
     public void connectTo(Discovery discovery) {
-        connectTo(discovery.getmEndpointId(), null);
+        connectTo(discovery.getEndpointId(), null);
     }
 
     public void connectTo(Discovery discovery, byte[] payload) {
-        connectTo(discovery.getmEndpointId(), payload);
+        connectTo(discovery.getEndpointId(), payload);
     }
 
     public void connectTo(String endpointId) {
@@ -227,12 +230,4 @@ public class LocalDiscovery implements
     }
 
 
-    public ArrayList<String> getRecentDiscoveries() {
-        ArrayList<String> res = new ArrayList<>();
-        for (Discovery disc : mRecentDiscoveries) {
-            res.add(disc.getmEndpointName());
-        }
-
-        return res;
-    }
 }

@@ -8,63 +8,79 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.psykzz.turnbasechat.DiscoverActivity">
+    tools:context="com.psykzz.kingdom.DiscoverActivity">
 
-            <RelativeLayout
-                android:id="@+id/upper_setting_layout"
-                android:layout_width="wrap_content"
-                android:layout_height="28dip">
+    <RelativeLayout
+        android:id="@+id/upper_layout"
+        android:layout_width="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentEnd="true"
+        android:gravity="start"
+        android:layout_height="40dip">
 
-                <TextView
-                    android:id="@+id/upper_setting_label"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="@string/label_local_visible"
-                    android:gravity="center_vertical"
-                    android:layout_alignParentLeft="false"
-                    android:elevation="1dp" />
+        <TextView
+            android:id="@+id/upper_setting_label"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/label_local_visible"
+            android:gravity="center_vertical" />
 
-                <Switch
-                    android:id="@+id/upper_setting_switch"
-                    android:text="@string/toggle_discover_visible"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true"
-                    android:switchPadding="@dimen/activity_horizontal_margin" />
-            </RelativeLayout>
+        <Switch
+            android:id="@+id/upper_setting_switch"
+            android:text="@string/toggle_discover_visible"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentEnd="true"
+            android:switchPadding="@dimen/activity_horizontal_margin"
+             />
+    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/chat_listing"
         android:layout_width="match_parent"
-        android:layout_below="@+id/upper_setting_layout"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:layout_below="@+id/upper_layout"
+        android:layout_alignParentBottom="false"
         android:layout_marginTop="22dp"
-        android:layout_height="400dip">
+        android:gravity="center_vertical"
+        android:layout_marginBottom="22dp"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/lower_layout">
 
-            <ListView
+            <com.psykzz.kingdom.Helpers.RecyclerEmptyView
+                android:id="@+id/discovered_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/discovered_list">
-
-
-            </ListView>
+                android:scrollbars="vertical"
+                tools:listitem="@layout/discovery_item"
+                android:clipChildren="true">
+            </com.psykzz.kingdom.Helpers.RecyclerEmptyView>
+            <TextView android:id="@+id/list_empty"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/no_devices"
+                android:gravity="center" />
 
     </RelativeLayout>
 
-    <Button
-        android:text="Refresh"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btn_refresh"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="12dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginBottom="20dp" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_alignParentTop="false"
+        android:id="@+id/lower_layout"
+        android:layout_height="40dip"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:text="Refresh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_refresh"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="false" />
+    </RelativeLayout>
 
 
 </RelativeLayout>
